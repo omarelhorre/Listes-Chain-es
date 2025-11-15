@@ -143,7 +143,7 @@ void affiherListeProduit(liste* li)
 
 void enregistrer_liste_produits(FILE* myFile,liste* li)
 {
-    myFile = fopen("produits.txt","a+");
+    myFile = fopen("produits.txt","w"); // ca ecrase tout fichier existant et cree si il n'existe pas
     if(myFile == NULL){
         perror("Erreur");
     }
@@ -219,15 +219,36 @@ printf("l'element ayant le plus grand prix est \nNom : %s\nPrix : %f\nQuantite :
 return cou;
 }
 
-void lireDepuisFichier(FILE *file)
+void lireDepuisFichier(liste* li,FILE *file)
 {
     file = fopen("produits.txt","r");
     noeud* buffer = (noeud*) malloc(sizeof(noeud));
+    noeud* ptr;
+    ptr=li->debut;
     buffer->suivant = NULL;
+    if(li->fin == NULL ){
+        printf("liste vide\n");
+        printf("Ajout à la tete...\n");
+        while(fscanf(file,"%s %f %d",buffer->nom, &buffer->prix,&buffer->qte) == 3)
+    {
+                strcpy(ptr->nom,buffer->nom);
+                ptr->prix = buffer->prix;
+                ptr->qte = buffer->qte;
+                ptr = ptr->suivant;
+    }   
+        
+    }
+    else if(li->fin != NULL)
+    ptr = ptr->suivant;
+    {
     while(fscanf(file,"%s %f %d",buffer->nom, &buffer->prix,&buffer->qte) == 3)
     {
-        printf("Designation : %s | Prix : %f | Stock : %d",buffer->nom, buffer->prix,buffer->qte);
+        strcpy(ptr->nom,buffer->nom);
+        ptr->prix = buffer->prix;
+        ptr->qte = buffer->qte;
+        ptr = ptr->suivant;    
     }
+}
     fclose(file);
     free(buffer);
 }
@@ -298,7 +319,7 @@ case 6:
 enregistrer_liste_produits(myFile,list);
 break;
 case 7:
-lireDepuisFichier(myFile);
+lireDepuisFichier(list,myFile);
 break;
 default:
 free(list);
