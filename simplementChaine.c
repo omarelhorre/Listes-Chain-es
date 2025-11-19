@@ -267,6 +267,22 @@ void lireDepuisFichier(liste* li,FILE *file)
     fclose(file);
     printf("fichier lis avec succes\n"); 
 }
+
+void libererListe(liste* li){
+    noeud* prec;
+    noeud* ptr;
+    prec = NULL;
+    ptr = li->debut;
+    while(ptr!=NULL)
+    {
+        prec = ptr;
+        ptr = ptr->suivant;
+        free(prec);
+    }
+    li->debut = NULL;
+    li->fin = NULL; 
+    li->ref  = 0;
+}
 void main(void)
 {
     liste* list;
@@ -342,7 +358,7 @@ case 7:
 lireDepuisFichier(list,myFile);
 break;
 default:
-free(list);
+libererListe(list);
 exit(1);
     break;
 }

@@ -253,6 +253,19 @@ noeud*  trouver_produit_cher(list* li){
     return plus_cher;
 }
 
+void libererListe(list* li){
+    noeud* ptr;
+    noeud* prec;
+    prec = NULL;
+    while(ptr!=NULL){
+        prec = ptr;
+        ptr = ptr->suivant;
+        free(prec);
+    }
+    li->debut = NULL;
+    li->fin = NULL;
+    li->nef = NULL;
+}
 
 void main(void)
 {
