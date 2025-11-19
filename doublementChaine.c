@@ -347,6 +347,7 @@ case 8:
 afficher_liste_produits_inv(list);
 break;
 default:
+libererListe(list);
 free(list);
 exit(1);
     break;

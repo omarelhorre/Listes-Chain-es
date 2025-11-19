@@ -359,6 +359,7 @@ lireDepuisFichier(list,myFile);
 break;
 default:
 libererListe(list);
+free(list);
 exit(1);
     break;
 }
