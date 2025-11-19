@@ -190,6 +190,7 @@ void lire_liste_produits(list *li,FILE* file){
             ptr->precedent = li->fin;
             li->fin = ptr;
         }
+        li->nef ++;
     }
     fclose(file);
     printf("Liste charge avec succes\n\n");
